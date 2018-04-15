@@ -92,7 +92,7 @@ double Matrix::getData(int row, int col) const //get the element at (row, col) a
 
 int Matrix::count=0;
 
-int Matrix::getCount(){return count;}
+int Matrix::getCount(){return count;}//return static int count
 
 Matrix Matrix::add(const Matrix& Adder)//check if the sizes of two matrixes are the same and add all elements afterward
 {
@@ -110,7 +110,7 @@ Matrix Matrix::add(const Matrix& Adder)//check if the sizes of two matrixes are 
 	return Sum;
 }
 
-Matrix operator+(Matrix& lhs, const Matrix& rhs)
+Matrix operator+(const Matrix& lhs, const Matrix& rhs)//overload the operator+ and make it suitable for matrices addition
 {
 	if (lhs.row != rhs.row || lhs.col != rhs.col)
 	{
@@ -125,7 +125,7 @@ Matrix operator+(Matrix& lhs, const Matrix& rhs)
 	return Sum;
 }
 
-Matrix Matrix::operator+(const double& rhs)
+Matrix Matrix::operator+(const double& rhs) const//overload the operator+ and make it suitable for a constant addition to a matrix
 {
 	Matrix Sum(this->row, this->col);
 	for (int rowCnt = 0; rowCnt<this->row; rowCnt++)
@@ -135,7 +135,7 @@ Matrix Matrix::operator+(const double& rhs)
 	return Sum;
 }
 
-Matrix& Matrix::operator=(const Matrix& rhs)
+Matrix& Matrix::operator=(const Matrix& rhs)//assignment operator, make the lhs as the same as the rhs
 {
 	for (int rowCnt = 0; rowCnt<row; rowCnt++)
 		delete[] data[rowCnt];
@@ -150,13 +150,13 @@ Matrix& Matrix::operator=(const Matrix& rhs)
 	return *this;
 }
 
-Matrix& Matrix::operator+=(const Matrix& rhs)
+Matrix& Matrix::operator+=(const Matrix& rhs)//overload the operator+= with the already-existing operator+ and operator=
 {
 	*this=*this+rhs;
 	return *this;
 }
 
-Matrix Matrix::operator++(int)
+Matrix Matrix::operator++(int)//overload the postfix increment operator with the already-existing operator+ and operator=
 {
 	Matrix tmp(*this);
 	*this=*this+1;
@@ -188,7 +188,7 @@ Matrix Matrix::multiply(const Matrix& Multiplier)//Do the matrix multiplication
 	return Product;
 }
 
-Matrix operator*(Matrix& lhs, const Matrix& rhs)//Do the matrix multiplication
+Matrix operator*(const Matrix& lhs, const Matrix& rhs)//Do the matrix multiplication
 {
 	if (lhs.getCol() != rhs.getRow())
 	{
@@ -224,7 +224,7 @@ Matrix Matrix::transpose()//Transpose the Matrix
 	return Result;
 }
 
-Matrix Matrix::operator()()
+Matrix Matrix::operator()()//Transpose the Matrix by Matrix m();
 {
 	Matrix Result(this->col, this->row);
 	for (int rowCnt = 0; rowCnt < this->row; rowCnt++) 
@@ -237,7 +237,7 @@ Matrix Matrix::operator()()
 	return Result;
 }
 
-bool Matrix::operator==(const Matrix& rhs)
+bool Matrix::operator==(const Matrix& rhs) const//comparison of two matrices and return if one is the same as the other
 {
 	if(this->row!=rhs.row) return false;
 	if(this->col!=rhs.col) return false;
@@ -258,7 +258,7 @@ bool Matrix::operator==(const Matrix& rhs)
 	return Flag;
 }
 
-ostream& operator<<(ostream& os, const Matrix& rhs)
+ostream& operator<<(ostream& os, const Matrix& rhs)//simply copy the display member function in header file
 {
 	os<<endl;
 	for (int i = 0;i<rhs.row; i++) {
@@ -270,7 +270,7 @@ ostream& operator<<(ostream& os, const Matrix& rhs)
 	return os;
 }
 
-istream& operator>>(istream& is, Matrix& rhs)
+istream& operator>>(istream& is, Matrix& rhs)//indicate the row number and column number and let the user input the element value
 {
 	for (int i = 0;i<rhs.row; i++) {
 		for (int j = 0;j<rhs.col; j++) {

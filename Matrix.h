@@ -49,16 +49,16 @@ public:
 	}
 	
 	
-	friend Matrix operator+(Matrix&, const Matrix&);
-	Matrix operator+(const double&);
-	Matrix& operator=(const Matrix&);
-	Matrix& operator+=(const Matrix&);
-	Matrix operator++(int);
-	friend Matrix operator*(Matrix&, const Matrix&);
-	Matrix operator()();
-	bool operator==(const Matrix&);
-	friend ostream& operator<<(ostream&, const Matrix&);
-	friend istream& operator>>(istream&, Matrix&);
+	friend Matrix operator+(const Matrix&, const Matrix&);//Matrix+Matrix
+	Matrix operator+(const double&) const;//Matrix+constant
+	Matrix& operator=(const Matrix&);//Matrix=Matrix
+	Matrix& operator+=(const Matrix&);//Matrix+=Matrix  ->  MatrixA=MatrixA+MatrixB
+	Matrix operator++(int);//Matrix++  ->  Matrix=Matrix+1
+	friend Matrix operator*(const Matrix&, const Matrix&);//Matrix*Matrix
+	Matrix operator()();//Matrix()  ->  transpose(Matrix)
+	bool operator==(const Matrix&) const;//are two Matrices the same?
+	friend ostream& operator<<(ostream&, const Matrix&);//Matrix a; cout<<a;  ->  a.displayData();
+	friend istream& operator>>(istream&, Matrix&);//Matrix a; cin>>a;
 };
 
 #endif
